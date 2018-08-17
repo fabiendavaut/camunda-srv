@@ -35,11 +35,13 @@ public class ConsumerProducerService {
 //    }
 
     @StreamListener(ConsumerProducerChannel.RECEIPT_CHANNEL)
-    public synchronized void consumeReceipt(MyReceiptDTO myReceiptDTO) {
+    public synchronized void consumeReceipt(GenericDTO genericDTO) {
 
-        log.debug("Received message: {}.", myReceiptDTO);
+        log.debug("Received message: {}.", genericDTO);
 
-        processEngine.getRuntimeService().signal(myReceiptDTO.getExecutionId());
+        if (genericDTO instanceof MyReceiptDTO) {
+            processEngine.getRuntimeService().signal(((MyReceiptDTO) genericDTO).getExecutionId());
+        }
     }
 
 

@@ -3,12 +3,17 @@ package com.viadialog.camundasrv.messaging;
 
 import java.io.Serializable;
 
-public class MyReceiptDTO implements Serializable {
+public class MyReceiptDTO extends GenericDTO {
 
     private String executionId;
 
     public String getExecutionId() {
         return executionId;
+    }
+
+    public MyReceiptDTO() {
+        super();
+        this.type = "MYRECEIPT";
     }
 
     MyReceiptDTO executionId(String executionId) {
