@@ -78,6 +78,28 @@ spring:
         locator:
             discovery:
                 enabled: true
+    cloud:
+        stream:
+            bindings:
+                command:
+                    destination: queue.messages.command
+                    binder: rabbit_viadialog
+                    content-type: application/json
+                receipt:
+                    destination: queue.messages.receipt
+                    binder: rabbit_viadialog
+                    content-type: application/json
+            binders:
+                rabbit_viadialog:
+                    type: rabbit
+                    environment:
+                        spring:
+                            rabbitmq:
+                                host: localhost
+                                port: 5672
+                                username: archiv3
+                                password: archiv3
+                                virtual-host: archiv3
 
 # ===================================================================
 # To enable SSL, generate a certificate using:

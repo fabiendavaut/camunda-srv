@@ -43,11 +43,16 @@ public class SecurityConfiguration extends ResourceServerConfigurerAdapter {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
             .authorizeRequests()
-            .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/info").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/swagger-resources/configuration/ui").permitAll();
+            .antMatchers("/swagger-resources/configuration/ui").permitAll()
+            .antMatchers("/api/bpm/**").permitAll()
+            .antMatchers("/api/cockpit/**").permitAll()
+            .antMatchers("/api/tasklist/**").permitAll()
+            .antMatchers("/api/engine/**").permitAll()
+            .antMatchers("/api/admin/**").permitAll()
+            .antMatchers("/api/**").authenticated();
     }
 
     @Bean
