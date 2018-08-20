@@ -52,6 +52,7 @@ public class SecurityConfiguration extends ResourceServerConfigurerAdapter {
             .antMatchers("/api/tasklist/**").permitAll()
             .antMatchers("/api/engine/**").permitAll()
             .antMatchers("/api/admin/**").permitAll()
+            .antMatchers("/rest/**").permitAll()
             .antMatchers("/api/**").authenticated();
     }
 

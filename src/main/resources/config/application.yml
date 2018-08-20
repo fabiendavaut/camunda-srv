@@ -160,3 +160,5 @@ camunda:
         admin-user:
             id: admin
             password: admin
+        history-level: FULL
+        history-level-default: FULL

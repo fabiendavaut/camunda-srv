@@ -113,6 +113,11 @@
             <artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
             <version>${camunda.springboot.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.camunda.bpm.springboot</groupId>
+            <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
+            <version>${camunda.springboot.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>io.github.jhipster</groupId>
