@@ -1,10 +1,14 @@
 package com.viadialog.camundasrv.messaging;
 
+import org.camunda.bpm.engine.BadUserRequestException;
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.runtime.Execution;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ConsumerProducerService {
@@ -39,7 +43,24 @@ public class ConsumerProducerService {
         log.debug("Received message: {}.", genericDTO);
 
         if (genericDTO instanceof MyReceiptDTO) {
-            processEngine.getRuntimeService().signal(((MyReceiptDTO) genericDTO).getExecutionId());
+
+//            try {
+
+
+
+                processEngine.getRuntimeService().signal(((MyReceiptDTO) genericDTO).getExecutionId());
+
+
+
+//            } catch (BadUserRequestException e) {
+//                log.debug("Bad execution Id :" + e.getMessage());
+//
+//                log.debug("Bad execution Id :" + ((MyReceiptDTO) genericDTO).getExecutionId());
+//                log.debug("Execution count :" + processEngine.getRuntimeService().createExecutionQuery().count());
+//                log.debug("Available Execution : " + processEngine.getRuntimeService().createExecutionQuery().list());
+//
+//                throw new RuntimeException("Execution not yet available");
+//            }
         }
     }
 

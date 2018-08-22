@@ -80,11 +80,22 @@ spring:
                 enabled: true
     cloud:
         stream:
+            rabbit:
+                bindings:
+                    receipt:
+                        consumer:
+                            requeue-rejected: true
+                    queue.messages.command:
+                        consumer:
+                            requeue-rejected: true
             bindings:
                 command:
                     destination: queue.messages.command
                     binder: rabbit_viadialog
                     content-type: application/json
+                    consumer:
+                        max-attempts: 1
+                    group: scriptreader
                 receipt:
                     destination: queue.messages.receipt
                     binder: rabbit_viadialog

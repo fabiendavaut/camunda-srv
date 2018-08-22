@@ -6,8 +6,11 @@ import com.viadialog.camundasrv.bpm.BPMOverviewDTO;
 import com.viadialog.camundasrv.messaging.ConsumerProducerChannel;
 import com.viadialog.camundasrv.messaging.ConsumerProducerService;
 import com.viadialog.camundasrv.messaging.MyCommandDTO;
+import com.viadialog.camundasrv.messaging.MyReceiptDTO;
 import org.camunda.bpm.engine.HistoryService;
+import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.runtime.Execution;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -24,16 +28,18 @@ public class BPMResource {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
+    private final ProcessEngine processEngine;
     private final RuntimeService runtimeService;
     private final HistoryService historyService;
     private final ConsumerProducerService consumerProducerService;
     private final ConsumerProducerChannel consumerProducerChannel;
 
 
-    public BPMResource(RuntimeService runtimeService, ConsumerProducerService consumerProducerService, ConsumerProducerChannel consumerProducerChannel, HistoryService historyService) {
+    public BPMResource(RuntimeService runtimeService, ConsumerProducerService consumerProducerService, ConsumerProducerChannel consumerProducerChannel, HistoryService historyService, ProcessEngine processEngine) {
         this.runtimeService = runtimeService;
         this.consumerProducerService = consumerProducerService;
         this.consumerProducerChannel = consumerProducerChannel;
+        this.processEngine = processEngine;
         this.historyService = historyService;
     }
 
@@ -41,18 +47,24 @@ public class BPMResource {
     @Timed
     public ResponseEntity<Void> sendMessage() {
 
-        try {
+//        try {
 
-            for (Integer i = 0; i < 100; i++) {
+            for (Integer i = 0; i < 10; i++) {
 
-                TimeUnit.SECONDS.sleep(1);
+                // TimeUnit.SECONDS.sleep(5);
 
-                runtimeService.startProcessInstanceByMessage("startMsg", UUID.randomUUID().toString(), ImmutableMap.of("date", LocalDateTime.now()));
+
+                String businessKEy = UUID.randomUUID().toString();
+                runtimeService.startProcessInstanceByMessage("startMsg", businessKEy, ImmutableMap.of("date", LocalDateTime.now()));
+
+
+//                log.debug("Execution count :" + processEngine.getRuntimeService().createExecutionQuery().count());
+//                log.debug("Available Execution : " + processEngine.getRuntimeService().createExecutionQuery().list());
 
             }
-        } catch (InterruptedException e) {
-
-        }
+//        } catch (InterruptedException e) {
+//            log.error("XXXXXXXX " + e.getMessage());
+//        }
 
         return ResponseEntity.noContent().build();
     }

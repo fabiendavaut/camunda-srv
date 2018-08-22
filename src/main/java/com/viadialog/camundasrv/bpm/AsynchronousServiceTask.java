@@ -2,23 +2,24 @@ package com.viadialog.camundasrv.bpm;
 
 import com.viadialog.camundasrv.messaging.ConsumerProducerChannel;
 import com.viadialog.camundasrv.messaging.MyCommandDTO;
-import com.viadialog.camundasrv.service.BeanUtil;
 import org.camunda.bpm.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
 import org.camunda.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Service
 public class AsynchronousServiceTask extends AbstractBpmnActivityBehavior {
 
     public static final String EXECUTION_ID = "executionId";
 
     private ConsumerProducerChannel consumerProducerChannel;
 
-    public AsynchronousServiceTask() {
+    public AsynchronousServiceTask(ConsumerProducerChannel consumerProducerChannel) {
         super();
-        this.consumerProducerChannel = BeanUtil.getBean(ConsumerProducerChannel.class);
+        this.consumerProducerChannel = consumerProducerChannel;
     }
 
     public void execute(final ActivityExecution execution) throws Exception {
